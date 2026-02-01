@@ -1,10 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bo-Karoo Skoonheidskliniek</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ===== Base Styles ===== */
+  body {
+    margin: 0;
+    background-color: #000; /* Black background */
+    color: #eee;
+    font-family: 'Poppins', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+    padding: 30px 15px;
+    text-align: center;
+  }
+
+  h1 {
+    font-weight: 600;
+    font-size: 2.8rem;
+    margin-bottom: 6px;
+  }
+
+  .bio {
+    font-size: 1.1rem;
+    color: #bbb;
+    margin-bottom: 30px;
+  }
+
+  /* ===== Buttons ===== */
+  .buttons {
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 40px;
+  }
+
+  a.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 0;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+    cursor: pointer;
+  }
+
+  a.button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px 6px rgba(255,255,255,0.7);
+  }
+
+  .facebook { background-color: #3b5998; }
+  .tiktok { background-color: #010101; }
+  .whatsapp { background-color: #25D366; color: #000; }
+  .maps { background-color: #db4437; }
+
+  /* ===== Announcement Box ===== */
+  .announce {
+    background-color: #111;
+    padding: 22px 24px;
+    border-radius: 16px;
+    max-width: 400px;
+    margin: 0 auto 40px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.5);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .announce:hover {
+    box-shadow: 0 0 25px rgba(230,194,139,0.35);
+  }
+
+  .announce h2 {
+    margin-top: 0;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+
+  .announce p {
+    font-size: 1.1rem;
+    margin: 0;
+    transition: color 0.3s ease, opacity 0.3s ease;
+  }
+
+  .announce .date {
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: #888;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 400px) {
+    h1 { font-size: 2.2rem; }
+    a.button { font-size: 1rem; }
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Bo-Karoo Skoonheidskliniek</h1>
+<div class="bio">💆‍♀️ Professional Beauty Treatments | ✨ Skincare & Relaxation</div>
+
+<div class="buttons">
+  <a class="button facebook" id="facebookBtn">Facebook</a>
+  <a class="button tiktok" id="tiktokBtn">TikTok</a>
+  <a class="button whatsapp" id="whatsappBtn">Book on WhatsApp</a>
+  <a class="button maps" id="mapsBtn">Find Us on Google Maps</a>
+</div>
+
+<div class="announce">
+  <h2>📢 Announcements</h2>
+  <p id="announcementText"></p>
+  <div class="date" id="lastUpdated"></div>
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* =========================
-     SOCIAL MEDIA LINKS
-  ========================= */
-
+  /* ===== Social Links ===== */
   const links = {
     facebook: "https://facebook.com/bokaroo.skoonheidskliniek",
     tiktok: "https://www.tiktok.com/@jolize_duvenhage?lang=en",
@@ -12,35 +141,18 @@ document.addEventListener("DOMContentLoaded", () => {
     maps: "https://www.google.com/maps?q=-29.819083702236263,24.413981919185883"
   };
 
-  const facebookBtn = document.getElementById("facebookBtn");
-  const tiktokBtn = document.getElementById("tiktokBtn");
-  const whatsappBtn = document.getElementById("whatsappBtn");
-  const mapsBtn = document.getElementById("mapsBtn");
+  document.getElementById("facebookBtn").href = links.facebook;
+  document.getElementById("tiktokBtn").href = links.tiktok;
+  document.getElementById("whatsappBtn").href = links.whatsapp;
+  document.getElementById("mapsBtn").href = links.maps;
 
-  if (facebookBtn) {
-    facebookBtn.href = links.facebook;
-    facebookBtn.target = "_blank";
-  }
+  const btns = ["facebookBtn","tiktokBtn","whatsappBtn","mapsBtn"];
+  btns.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.target = "_blank";
+  });
 
-  if (tiktokBtn) {
-    tiktokBtn.href = links.tiktok;
-    tiktokBtn.target = "_blank";
-  }
-
-  if (whatsappBtn) {
-    whatsappBtn.href = links.whatsapp;
-    whatsappBtn.target = "_blank";
-  }
-
-  if (mapsBtn) {
-    mapsBtn.href = links.maps;
-    mapsBtn.target = "_blank";
-  }
-
-  /* =========================
-     ANNOUNCEMENTS SYSTEM
-  ========================= */
-
+  /* ===== Announcements ===== */
   const announcements = [
     "📞 Contact +27 082 392 2131 for bookings",
     "💬 Book easily via WhatsApp – fast & convenient",
@@ -53,22 +165,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const lastUpdated = document.getElementById("lastUpdated");
   const announcementBox = document.querySelector(".announce");
 
-  if (!announcementText || !lastUpdated || !announcementBox) {
-    console.error("Announcement elements missing");
-    return;
-  }
-
   let index = 0;
   let interval;
 
   function showAnnouncement() {
     announcementText.style.opacity = 0;
-
     setTimeout(() => {
       announcementText.textContent = announcements[index];
       lastUpdated.textContent =
         "Last updated: " + new Date().toLocaleDateString();
-
       announcementText.style.opacity = 1;
       index = (index + 1) % announcements.length;
     }, 300);
@@ -77,13 +182,11 @@ document.addEventListener("DOMContentLoaded", () => {
   showAnnouncement();
   interval = setInterval(showAnnouncement, 5000);
 
-  announcementBox.addEventListener("mouseenter", () => {
-    clearInterval(interval);
-  });
-
-  announcementBox.addEventListener("mouseleave", () => {
-    interval = setInterval(showAnnouncement, 5000);
-  });
+  announcementBox.addEventListener("mouseenter", () => clearInterval(interval));
+  announcementBox.addEventListener("mouseleave", () => interval = setInterval(showAnnouncement, 5000));
 
 });
 </script>
+
+</body>
+</html>
