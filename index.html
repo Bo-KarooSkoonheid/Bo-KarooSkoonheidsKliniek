@@ -1,51 +1,89 @@
 <script>
-  // ===============================
-  // Announcements System
-  // ===============================
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* =========================
+     SOCIAL MEDIA LINKS
+  ========================= */
+
+  const links = {
+    facebook: "https://facebook.com/bokaroo.skoonheidskliniek",
+    tiktok: "https://www.tiktok.com/@jolize_duvenhage?lang=en",
+    whatsapp: "https://wa.me/27823922131",
+    maps: "https://www.google.com/maps?q=-29.819083702236263,24.413981919185883"
+  };
+
+  const facebookBtn = document.getElementById("facebookBtn");
+  const tiktokBtn = document.getElementById("tiktokBtn");
+  const whatsappBtn = document.getElementById("whatsappBtn");
+  const mapsBtn = document.getElementById("mapsBtn");
+
+  if (facebookBtn) {
+    facebookBtn.href = links.facebook;
+    facebookBtn.target = "_blank";
+  }
+
+  if (tiktokBtn) {
+    tiktokBtn.href = links.tiktok;
+    tiktokBtn.target = "_blank";
+  }
+
+  if (whatsappBtn) {
+    whatsappBtn.href = links.whatsapp;
+    whatsappBtn.target = "_blank";
+  }
+
+  if (mapsBtn) {
+    mapsBtn.href = links.maps;
+    mapsBtn.target = "_blank";
+  }
+
+  /* =========================
+     ANNOUNCEMENTS SYSTEM
+  ========================= */
 
   const announcements = [
     "📞 Contact +27 082 392 2131 for bookings",
     "💬 Book easily via WhatsApp – fast & convenient",
     "📘 Visit our Facebook page for latest updates & uploads",
+    "📍 Find us on Google Maps for directions",
     "✨ Professional beauty treatments in a calm, friendly space"
   ];
 
   const announcementText = document.getElementById("announcementText");
   const lastUpdated = document.getElementById("lastUpdated");
+  const announcementBox = document.querySelector(".announce");
 
-  let currentAnnouncement = 0;
-  let rotationInterval;
+  if (!announcementText || !lastUpdated || !announcementBox) {
+    console.error("Announcement elements missing");
+    return;
+  }
 
-  function showAnnouncement(index) {
+  let index = 0;
+  let interval;
+
+  function showAnnouncement() {
     announcementText.style.opacity = 0;
 
     setTimeout(() => {
       announcementText.textContent = announcements[index];
       lastUpdated.textContent =
         "Last updated: " + new Date().toLocaleDateString();
+
       announcementText.style.opacity = 1;
+      index = (index + 1) % announcements.length;
     }, 300);
   }
 
-  function startRotation() {
-    rotationInterval = setInterval(() => {
-      currentAnnouncement =
-        (currentAnnouncement + 1) % announcements.length;
-      showAnnouncement(currentAnnouncement);
-    }, 5000);
-  }
+  showAnnouncement();
+  interval = setInterval(showAnnouncement, 5000);
 
-  function stopRotation() {
-    clearInterval(rotationInterval);
-  }
+  announcementBox.addEventListener("mouseenter", () => {
+    clearInterval(interval);
+  });
 
-  // Initial load
-  showAnnouncement(currentAnnouncement);
-  startRotation();
+  announcementBox.addEventListener("mouseleave", () => {
+    interval = setInterval(showAnnouncement, 5000);
+  });
 
-  // Pause rotation when hovering over announcements
-  const announcementBox = document.querySelector(".announce");
-
-  announcementBox.addEventListener("mouseenter", stopRotation);
-  announcementBox.addEventListener("mouseleave", startRotation);
+});
 </script>
