@@ -1,0 +1,51 @@
+<script>
+  // ===============================
+  // Announcements System
+  // ===============================
+
+  const announcements = [
+    "📞 Contact +27 082 392 2131 for bookings",
+    "💬 Book easily via WhatsApp – fast & convenient",
+    "📘 Visit our Facebook page for latest updates & uploads",
+    "✨ Professional beauty treatments in a calm, friendly space"
+  ];
+
+  const announcementText = document.getElementById("announcementText");
+  const lastUpdated = document.getElementById("lastUpdated");
+
+  let currentAnnouncement = 0;
+  let rotationInterval;
+
+  function showAnnouncement(index) {
+    announcementText.style.opacity = 0;
+
+    setTimeout(() => {
+      announcementText.textContent = announcements[index];
+      lastUpdated.textContent =
+        "Last updated: " + new Date().toLocaleDateString();
+      announcementText.style.opacity = 1;
+    }, 300);
+  }
+
+  function startRotation() {
+    rotationInterval = setInterval(() => {
+      currentAnnouncement =
+        (currentAnnouncement + 1) % announcements.length;
+      showAnnouncement(currentAnnouncement);
+    }, 5000);
+  }
+
+  function stopRotation() {
+    clearInterval(rotationInterval);
+  }
+
+  // Initial load
+  showAnnouncement(currentAnnouncement);
+  startRotation();
+
+  // Pause rotation when hovering over announcements
+  const announcementBox = document.querySelector(".announce");
+
+  announcementBox.addEventListener("mouseenter", stopRotation);
+  announcementBox.addEventListener("mouseleave", startRotation);
+</script>
